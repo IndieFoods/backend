@@ -8,9 +8,15 @@ servers:
 tags:
   - name: Auth
     description: Authentication endpoints
+  - name: User
+    description: User endpoints
 paths:
   /auth/signup-user:
     post:
+      tags:
+        - Auth
+      security:
+        - Bearer: []
       summary: Signup a new user
       description: Signup a new user
       requestBody:
@@ -28,6 +34,10 @@ paths:
                 $ref: '#/components/schemas/SignupUserResponse'
   /auth/signup-chef:
     post:
+      tags:
+        - Auth
+      security:
+        - Bearer: []
       summary: Signup a new chef
       description: Signup a new chef
       requestBody:
@@ -43,7 +53,33 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SignupChefResponse'
+  /user/add-address:
+    post:
+      tags:
+        - User
+      security:
+        - Bearer: []
+      summary: Add an address to a user
+      description: Add an address to a user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddAddress'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddAddressResponse'
 components:
+  securitySchemes:
+    Bearer:
+      type: http
+      scheme: bearer
+      description: Provide a valid JWT token
   schemas:
     SignupUser:
       type: object
@@ -98,6 +134,25 @@ components:
         email:
           type: string
     SignupChefResponse:
+      type: object
+      properties:
+        message:
+          type: string
+    AddAddress:
+      type: object
+      required:
+        - address
+      properties:
+        address:
+          type: array
+          items:
+            type: object
+            properties:
+              address:
+                type: string
+              pincode:
+                type: string
+    AddAddressResponse:
       type: object
       properties:
         message:
