@@ -53,6 +53,21 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SignupChefResponse'
+  /user/:
+    get:
+      tags:
+        - User
+      security:
+        - Bearer: []
+      summary: Get a user
+      description: Get a user
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
   /user/add-address:
     post:
       tags:
@@ -74,6 +89,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/AddAddressResponse'
+
 components:
   securitySchemes:
     Bearer:
@@ -156,4 +172,24 @@ components:
       type: object
       properties:
         message:
+          type: string
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        phone:
+          type: string
+        address:
+          type: array
+          items:
+            type: object
+            properties:
+              address:
+                type: string
+              pincode:
+                type: string
+        email:
           type: string

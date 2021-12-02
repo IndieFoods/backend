@@ -4,4 +4,5 @@ import controller from './controller';
 
 export default express
   .Router()
+  .get('/', authHandler, controller.getUserDetails)
   .post('/add-address', authHandler, controller.addAddress);
