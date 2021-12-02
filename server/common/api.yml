@@ -6,126 +6,99 @@ info:
 servers:
   - url: /api/v1
 tags:
-  - name: Examples
-    description: Simple example endpoints
-  - name: Specification
-    description: The swagger API specification
+  - name: Auth
+    description: Authentication endpoints
 paths:
-  /examples:
-    get:
-      tags:
-        - Examples
-      description: Fetch all examples
-      responses:
-        200:
-          description: Return the example with the specified id
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Example'
-        4XX:
-          description: Example not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-        5XX:
-          description: Example not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+  /auth/signup-user:
     post:
-      tags:
-        - Examples
-      description: Create a new example
+      summary: Signup a new user
+      description: Signup a new user
       requestBody:
-        description: an example
+        required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ExampleBody'
+              $ref: '#/components/schemas/SignupUser'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SignupUserResponse'
+  /auth/signup-chef:
+    post:
+      summary: Signup a new chef
+      description: Signup a new chef
+      requestBody:
         required: true
-      responses:
-        201:
-          description: Return the example with the specified id
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Example'
-        4XX:
-          description: Example not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-        5XX:
-          description: Example not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-  /examples/{id}:
-    get:
-      tags:
-        - Examples
-      parameters:
-        - name: id
-          in: path
-          description: The id of the example to retrieve
-          required: true
-          schema:
-            type: integer
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignupChef'
       responses:
         200:
-          description: Return the example with the specified id
+          description: Success
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Example'
-        4XX:
-          description: Example not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-        5XX:
-          description: Example not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-  /spec:
-    get:
-      tags:
-        - Specification
-      responses:
-        200:
-          description: Return the API specification
-          content: {}
+                $ref: '#/components/schemas/SignupChefResponse'
 components:
   schemas:
-    Example:
+    SignupUser:
       type: object
-      properties:
-        id:
-          type: integer
-          example: 3
-        name:
-          type: string
-          example: example 3
-    Error:
-      type: object
-      additionalProperties: true
-
-    ExampleBody:
-      title: example
       required:
         - name
-      type: object
+        - phone
+        - address
       properties:
         name:
           type: string
-          example: no_stress
+        phone:
+          type: string
+        address:
+          type: array
+          items:
+            type: object
+            properties:
+              address:
+                type: string
+              pincode:
+                type: string
+        email:
+          type: string
+    SignupUserResponse:
+      type: object
+      properties:
+        message:
+          type: string
+    SignupChef:
+      type: object
+      required:
+        - name
+        - phone
+        - address
+        - fssaiId
+      properties:
+        name:
+          type: string
+        phone:
+          type: string
+        address:
+          type: array
+          items:
+            type: object
+            properties:
+              address:
+                type: string
+              pincode:
+                type: string
+        fssaiId:
+          type: string
+        email:
+          type: string
+    SignupChefResponse:
+      type: object
+      properties:
+        message:
+          type: string
