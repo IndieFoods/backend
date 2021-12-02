@@ -14,6 +14,7 @@ const app = new Express();
 
 export default class ExpressServer {
   constructor() {
+    app.use(cors());
     const root = path.normalize(`${__dirname}/../..`);
 
     const apiSpec = path.join(__dirname, 'api.yml');

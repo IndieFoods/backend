@@ -4,7 +4,7 @@ export class Controller {
   async signupUser(req, res, next) {
     try {
       const { name, phone, address, email } = req.body;
-      if (!name || address.length !== 0 || !phone)
+      if (!name || address.length === 0 || !phone)
         throw new Error({
           message: 'Please fill all necessary fields',
         });
@@ -23,7 +23,7 @@ export class Controller {
   async signupChef(req, res, next) {
     try {
       const { name, phone, address, fssaiId, email } = req.body;
-      if (!name || address.length !== 0 || !phone || !fssaiId)
+      if (!name || address.length === 0 || !phone || !fssaiId)
         throw new Error({
           message: 'Please fill all necessary fields',
         });
