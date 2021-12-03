@@ -102,14 +102,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetAllChefsResponse'
-  /chef/menuItem/:
+  /chef/menuItems:
     post:
       tags:
         - Chef
       security:
         - Bearer: []
-      summary: Add a menu items to a chef
-      description: Add a menu items to a chef
+      summary: Add menu items
+      description: Add menu items
       requestBody:
         required: true
         content:
@@ -128,8 +128,8 @@ paths:
         - Chef
       security:
         - Bearer: []
-      summary: Update a menu items from a chef
-      description: Update a menu items from a chef
+      summary: Update menu items
+      description: Update menu items
       requestBody:
         required: true
         content:
