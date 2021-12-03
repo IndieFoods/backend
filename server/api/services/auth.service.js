@@ -15,25 +15,26 @@ class AuthService {
       });
       return { message: 'User registered successfully' };
     } catch (error) {
-      console.log(error);
       l.error('[SIGNUP SERVICE USER]', error);
+      throw error;
     }
   }
-  async signupChef(name, phone, address, fssaiId, email, uid) {
+  async signupChef(name, phone, address, fssaiId, foodTypes, email, uid) {
     try {
       await this.chefCollectionRef.doc(uid).set({
         name,
         phone,
         address,
         fssaiId,
+        foodTypes,
         email,
         isChef: true,
         createdAt: new Date(),
       });
       return { message: 'Chef registered successfully' };
     } catch (error) {
-      console.log(error);
       l.error('[SIGNUP SERVICE CHEF]', error);
+      throw error;
     }
   }
 }

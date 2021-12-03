@@ -10,6 +10,8 @@ tags:
     description: Authentication endpoints
   - name: User
     description: User endpoints
+  - name: Chef
+    description: Chef endpoints
 paths:
   /auth/signup-user:
     post:
@@ -89,6 +91,81 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/AddAddressResponse'
+  /chef/menuItem/:
+    post:
+      tags:
+        - Chef
+      security:
+        - Bearer: []
+      summary: Add a menu item to a chef
+      description: Add a menu item to a chef
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MenuItem'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MenuItem'
+    get:
+      tags:
+        - Chef
+      security:
+        - Bearer: []
+      summary: Get all menu items from a chef
+      description: Get all menu items from a chef
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MenuItem'
+    put:
+      tags:
+        - Chef
+      security:
+        - Bearer: []
+      summary: Update a menu item from a chef
+      description: Update a menu item from a chef
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MenuItem'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+    delete:
+      tags:
+        - Chef
+      security:
+        - Bearer: []
+      summary: Delete a menu item from a chef
+      description: Delete a menu item from a chef
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeleteMenuItem'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
 
 components:
   securitySchemes:
@@ -131,6 +208,7 @@ components:
         - phone
         - address
         - fssaiId
+        - foodTypes
       properties:
         name:
           type: string
@@ -147,6 +225,10 @@ components:
                 type: string
         fssaiId:
           type: string
+        foodTypes:
+          type: array
+          items:
+            type: string
         email:
           type: string
     SignupChefResponse:
@@ -173,6 +255,11 @@ components:
       properties:
         message:
           type: string
+    SuccessResponse:
+      type: object
+      properties:
+        message:
+          type: string
     User:
       type: object
       properties:
@@ -193,3 +280,22 @@ components:
                 type: string
         email:
           type: string
+    MenuItem:
+      type: object
+      properties:
+        name:
+          type: string
+        price:
+          type: number
+        image:
+          type: string
+        isVeg:
+          type: boolean
+        type:
+          type: string
+    DeleteMenuItem:
+      type: object
+      properties:
+        id:
+          type: string
+    

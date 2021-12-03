@@ -22,8 +22,14 @@ export class Controller {
   }
   async signupChef(req, res, next) {
     try {
-      const { name, phone, address, fssaiId, email } = req.body;
-      if (!name || address.length === 0 || !phone || !fssaiId)
+      const { name, phone, address, fssaiId, foodTypes, email } = req.body;
+      if (
+        !name ||
+        address.length === 0 ||
+        foodTypes.length === 0 ||
+        !phone ||
+        !fssaiId
+      )
         throw new Error({
           message: 'Please fill all necessary fields',
         });
@@ -32,6 +38,7 @@ export class Controller {
         phone,
         address,
         fssaiId,
+        foodTypes,
         email,
         req.user.uid
       );
