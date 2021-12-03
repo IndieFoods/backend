@@ -27,6 +27,14 @@ class AuthService {
         address,
         fssaiId,
         foodTypes,
+        profilePicture:
+          'https://images.unsplash.com/photo-1577219491135-ce391730fb2c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Y2hlZnxlbnwwfHwwfHw%3D&w=1000&q=80',
+        pricing: {
+          breakfast: 0,
+          lunch: 0,
+          dinner: 0,
+          snacks: 0,
+        },
         email,
         isChef: true,
         createdAt: new Date(),
