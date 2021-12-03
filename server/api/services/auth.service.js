@@ -6,6 +6,8 @@ class AuthService {
   chefCollectionRef = database.collection('chefs');
   async signupUser(name, phone, address, email, uid) {
     try {
+      const chefUser = await this.chefCollectionRef.doc(uid).get();
+      if (chefUser.exists) throw new Error('Already signed up as a chef');
       await this.userCollectionRef.doc(uid).set({
         name,
         phone,
@@ -21,6 +23,8 @@ class AuthService {
   }
   async signupChef(name, phone, address, fssaiId, foodTypes, email, uid) {
     try {
+      const user = await this.userCollectionRef.doc(uid).get();
+      if (user.exists) throw new Error('Already signed up as a foodie');
       await this.chefCollectionRef.doc(uid).set({
         name,
         phone,
