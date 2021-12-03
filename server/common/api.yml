@@ -68,21 +68,6 @@ paths:
       responses:
         200:
           description: Success
-  /user/:
-    get:
-      tags:
-        - User
-      security:
-        - Bearer: []
-      summary: Get a user
-      description: Get a user
-      responses:
-        200:
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'
   /user/updateAddress:
     put:
       tags:
