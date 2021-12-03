@@ -1,12 +1,11 @@
 class Chef {
-  constructor(uid, name, phone, address, fssaiId, email) {
+  constructor(uid, name, profilePicture, pricing, foodTypes) {
     this.uid = uid;
     this.name = name;
-    this.phone = phone;
-    this.address = address;
-    this.fssaiId = fssaiId;
     this.isChef = true;
-    this.email = email;
+    this.profilePicture = profilePicture;
+    this.pricing = pricing;
+    this.foodTypes = foodTypes;
   }
 }
 

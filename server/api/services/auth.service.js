@@ -37,6 +37,23 @@ class AuthService {
       throw error;
     }
   }
+
+  async getUser(uid) {
+    try {
+      const user = await this.userCollectionRef.doc(uid).get();
+      const chef = await this.chefCollectionRef.doc(uid).get();
+      if (user.exists) {
+        return user.data();
+      } else if (chef.exists) {
+        return chef.data();
+      } else {
+        throw new Error('User not found');
+      }
+    } catch (error) {
+      l.error('[GET USER]', error);
+      throw error;
+    }
+  }
 }
 
 export default new AuthService();

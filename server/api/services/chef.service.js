@@ -1,9 +1,28 @@
 import { database } from '../../common/firebase';
 import l from '../../common/logger';
+import Chef from '../../models/chef';
 
 class ChefService {
   menuItemsCollectionRef = database.collection('menuItems');
   chefCollectionRef = database.collection('chefs');
+
+  async getAllChefDetails() {
+    try {
+      const chefDetails = await this.chefCollectionRef.get();
+      return chefDetails.docs.map((doc) => {
+        return new Chef(
+          doc.id,
+          doc.data().name,
+          doc.data().profilePicture,
+          doc.data().pricing,
+          doc.data().foodTypes
+        );
+      });
+    } catch (error) {
+      l.error('[CHEF: GET ALL CHEF DETAILS]', error);
+      throw error;
+    }
+  }
 
   async updateProfilePicture(uid, image) {
     try {

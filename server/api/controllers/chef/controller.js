@@ -1,6 +1,15 @@
 import ChefService from '../../services/chef.service';
 
 export class Controller {
+  async getAllChefDetails(req, res, next) {
+    try {
+      const chefDetails = await ChefService.getAllChefDetails();
+      return res.status(200).json(chefDetails);
+    } catch (error) {
+      next(error);
+    }
+  }
+
   async updateProfilePicture(req, res, next) {
     try {
       const { imageUrl } = req.body;

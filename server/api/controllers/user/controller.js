@@ -1,15 +1,6 @@
 import UserService from '../../services/user.service';
 
 export class Controller {
-  async getUserDetails(req, res, next) {
-    try {
-      const user = await UserService.getUserDetails(req.user.uid);
-      res.status(200).json(user);
-    } catch (err) {
-      next(err);
-    }
-  }
-
   async updateAddress(req, res, next) {
     try {
       const { address } = req.body;

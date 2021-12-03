@@ -57,6 +57,17 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SignupChefResponse'
+  /auth/getUserDetails:
+    get:
+      tags:
+        - Auth
+      security:
+        - Bearer: []
+      summary: Get user details
+      description: Get user details
+      responses:
+        200:
+          description: Success
   /user/:
     get:
       tags:
@@ -78,7 +89,7 @@ paths:
         - User
       security:
         - Bearer: []
-      summary:  Update user addresses
+      summary: Update user addresses
       description: Update user addresses
       requestBody:
         required: true
@@ -93,6 +104,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/AddAddressResponse'
+  /chef/:
+    get:
+      tags:
+        - Chef
+      summary: Get all chefs details
+      description: Get all chefs details
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAllChefsResponse'
   /chef/menuItem/:
     post:
       tags:
@@ -204,7 +228,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ChefMenuItems'
-
 
 components:
   securitySchemes:
@@ -437,3 +460,27 @@ components:
               type: string
             snacks:
               type: string
+    GetAllChefsResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        profilePicture:
+          type: string
+        pricing:
+          type: object
+          properties:
+            breakfast:
+              type: string
+            lunch:
+              type: string
+            dinner:
+              type: string
+            snacks:
+              type: string
+        foodTypes:
+          type: array
+          items:
+            type: string

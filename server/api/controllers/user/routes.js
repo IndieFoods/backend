@@ -4,5 +4,4 @@ import controller from './controller';
 
 export default express
   .Router()
-  .get('/', authHandler, controller.getUserDetails)
   .post('/updateAddress', authHandler, controller.updateAddress);

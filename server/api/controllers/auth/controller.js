@@ -47,6 +47,15 @@ export class Controller {
       next(error);
     }
   }
+
+  async getUserDetails(req, res, next) {
+    try {
+      const user = await AuthService.getUser(req.user.uid);
+      res.status(200).json(user);
+    } catch (err) {
+      next(err);
+    }
+  }
 }
 
 export default new Controller();
