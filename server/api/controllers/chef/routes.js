@@ -4,5 +4,7 @@ import controller from './controller';
 
 export default express
   .Router()
+  .put('/updateProfilePicture', authHandler, controller.updateProfilePicture)
+  .put('/updateProfileData', authHandler, controller.updateProfileData)
   .post('/menuItems', authHandler, controller.createMenuItem)
   .put('/menuItems', authHandler, controller.updateMenuItem);

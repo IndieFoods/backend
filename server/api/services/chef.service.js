@@ -3,6 +3,34 @@ import l from '../../common/logger';
 
 class ChefService {
   menuItemsCollectionRef = database.collection('menuItems');
+  chefCollectionRef = database.collection('chefs');
+
+  async updateProfilePicture(uid, image) {
+    try {
+      await this.chefCollectionRef.doc(uid).update({
+        profilePicture: image,
+      });
+      return { message: 'Profile picture updated successfully' };
+    } catch (error) {
+      l.error('[CHEF: UPDATE PROFILE PICTURE]', error);
+      throw error;
+    }
+  }
+
+  async updateProfileData(uid, pricing, address, foodTypes) {
+    try {
+      await this.chefCollectionRef.doc(uid).update({
+        pricing,
+        address,
+        foodTypes,
+      });
+      return { message: 'Pricing updated successfully' };
+    } catch (error) {
+      l.error('[CHEF: ADD/UPDATE PROFILE DATA]', error);
+      throw error;
+    }
+  }
+
   async createMenuItem(menuItems, uid) {
     try {
       menuItems.map(async (menuItem) => {

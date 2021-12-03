@@ -1,6 +1,42 @@
 import ChefService from '../../services/chef.service';
 
 export class Controller {
+  async updateProfilePicture(req, res, next) {
+    try {
+      const { imageUrl } = req.body;
+      if (!imageUrl)
+        throw new Error({
+          message: 'Image Url is required',
+        });
+      const response = await ChefService.updateProfilePicture(
+        req.user.uid,
+        imageUrl
+      );
+      res.status(200).json(response);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async updateProfileData(req, res, next) {
+    try {
+      const { pricing, address, foodTypes } = req.body;
+      if (!pricing || !address || foodTypes.length === 0)
+        throw new Error({
+          message: 'Pricing, Address and Food Types are required',
+        });
+      const response = await ChefService.updateProfileData(
+        req.user.uid,
+        pricing,
+        address,
+        foodTypes
+      );
+      res.status(200).json(response);
+    } catch (error) {
+      next(error);
+    }
+  }
+
   async createMenuItem(req, res, next) {
     try {
       const { menuItems } = req.body;

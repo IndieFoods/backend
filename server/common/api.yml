@@ -12,6 +12,8 @@ tags:
     description: User endpoints
   - name: Chef
     description: Chef endpoints
+  - name: Menu Items
+    description: Menu Items endpoints
 paths:
   /auth/signup-user:
     post:
@@ -112,20 +114,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SuccessResponse'
-    # get:
-    #   tags:
-    #     - Chef
-    #   security:
-    #     - Bearer: []
-    #   summary: Get all menu items from a chef
-    #   description: Get all menu items from a chef
-    #   responses:
-    #     200:
-    #       description: Success
-    #       content:
-    #         application/json:
-    #           schema:
-    #             $ref: '#/components/schemas/MenuItem'
     put:
       tags:
         - Chef
@@ -138,7 +126,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UpdateMenuItem'
+              $ref: '#/components/schemas/UpdateMenuItems'
       responses:
         200:
           description: Success
@@ -146,26 +134,77 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SuccessResponse'
-    # delete:
-    #   tags:
-    #     - Chef
-    #   security:
-    #     - Bearer: []
-    #   summary: Delete a menu item from a chef
-    #   description: Delete a menu item from a chef
-    #   requestBody:
-    #     required: true
-    #     content:
-    #       application/json:
-    #         schema:
-    #           $ref: '#/components/schemas/DeleteMenuItem'
-    #   responses:
-    #     200:
-    #       description: Success
-    #       content:
-    #         application/json:
-    #           schema:
-    #             $ref: '#/components/schemas/SuccessResponse'
+  /chef/updateProfilePicture:
+    put:
+      tags:
+        - Chef
+      security:
+        - Bearer: []
+      summary: Update a chef's profile picture
+      description: Update a chef's profile picture
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateProfilePicture'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+  /chef/updateProfileData:
+    put:
+      tags:
+        - Chef
+      security:
+        - Bearer: []
+      summary: Update a chef's profile data
+      description: Update a chef's profile data
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateProfileData'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+  /menuItems/:
+    get:
+      tags:
+        - Menu Items
+      summary: Get all menu items
+      description: Get all menu items
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AllMenuItems'
+  /menuItems/chef:
+    get:
+      tags:
+        - Menu Items
+      security:
+        - Bearer: []
+      summary: Get all menu items from a chef
+      description: Get all menu items from a chef
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChefMenuItems'
+
 
 components:
   securitySchemes:
@@ -298,8 +337,29 @@ components:
                 type: boolean
               type:
                 type: string
-      
-    UpdateMenuItem:
+    AllMenuItems:
+      type: object
+      required:
+        - menuItems
+      properties:
+        menuItems:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              chefId:
+                type: string
+              name:
+                type: string
+              image:
+                type: string
+              isVeg:
+                type: boolean
+              type:
+                type: string
+    ChefMenuItems:
       type: object
       required:
         - menuItems
@@ -319,9 +379,61 @@ components:
                 type: boolean
               type:
                 type: string
-    # DeleteMenuItem:
-    #   type: object
-    #   properties:
-    #     id:
-    #       type: string
-    
+    UpdateMenuItems:
+      type: object
+      required:
+        - menuItems
+      properties:
+        menuItems:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              name:
+                type: string
+              image:
+                type: string
+              isVeg:
+                type: boolean
+              type:
+                type: string
+    UpdateProfilePicture:
+      type: object
+      required:
+        - imageUrl
+      properties:
+        imageUrl:
+          type: string
+    UpdateProfileData:
+      type: object
+      required:
+        - address
+        - foodTypes
+        - pricing
+      properties:
+        address:
+          type: array
+          items:
+            type: object
+            properties:
+              address:
+                type: string
+              pincode:
+                type: string
+        foodTypes:
+          type: array
+          items:
+            type: string
+        pricing:
+          type: object
+          properties:
+            breakfast:
+              type: string
+            lunch:
+              type: string
+            dinner:
+              type: string
+            snacks:
+              type: string
