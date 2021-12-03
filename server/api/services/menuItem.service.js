@@ -1,7 +1,9 @@
+import { database } from '../../common/firebase';
 import l from '../../common/logger';
 import MenuItem from '../../models/MenuItem';
 
 class MenuItemService {
+  menuItemsCollectionRef = database.collection('menuItems');
   async getAllMenuItems() {
     try {
       const menuItems = await this.menuItemsCollectionRef.get();
