@@ -2,13 +2,18 @@ import crypto from 'crypto';
 import { database } from '../../common/firebase';
 import l from '../../common/logger';
 import razorpayInstance from '../../common/razorpay';
+import Order from '../../models/order';
 
 class OrderService {
   ordersCollectionRef = database.collection('orders');
+  userCollectionRef = database.collection('users');
+  chefCollectionRef = database.collection('chefs');
+
   async initializeOrder(
     chefId,
     userId,
     type,
+    isVeg,
     address,
     numberOfDays,
     numberOfPeople,
@@ -32,11 +37,19 @@ class OrderService {
         total_count: numberOfDays,
       });
 
+      const user = await this.userCollectionRef.doc(userId).get();
+      const chef = await this.chefCollectionRef.doc(chefId).get();
+
       const orderDocumentRef = await this.ordersCollectionRef.add({
         chefId,
         userId,
-        address,
+        userName: user.data()?.name,
+        chefName: chef.data()?.name,
+        userAddress: address,
+        chefAddress: chef.data()?.address[0].address,
+        chefProfilePicture: chef.data()?.profilePicture,
         type,
+        isVeg,
         paid: false,
         subscriptionId: subscription.id,
         planId: plan.id,
@@ -82,6 +95,66 @@ class OrderService {
       return { message: 'Subscription successfull' };
     } catch (error) {
       l.error('[ORDERS: VERIFY ORDER]', error);
+      throw error;
+    }
+  }
+
+  async getPaidOrdersOfAChef(chefId) {
+    try {
+      const orders = await this.ordersCollectionRef
+        .where('chefId', '==', chefId)
+        .where('paid', '==', true)
+        .get();
+      return orders.docs.map(
+        (doc) =>
+          new Order(
+            doc.id,
+            doc.data()?.userName,
+            doc.data()?.chefName,
+            doc.data()?.totalAmount,
+            doc.data()?.dailySubscriptionAmount,
+            doc.data()?.numberOfDays,
+            doc.data()?.numberOfPeople,
+            doc.data()?.userAddress,
+            doc.data()?.chefAddress,
+            doc.data()?.chefProfilePicture,
+            doc.data()?.type,
+            doc.data()?.isVeg,
+            doc.data()?.createdAt
+          )
+      );
+    } catch (error) {
+      l.error('[ORDERS: GET PAID ORDERS OF A CHEF]', error);
+      throw error;
+    }
+  }
+
+  async getOrdersOfAUser(userId) {
+    try {
+      const orders = await this.ordersCollectionRef
+        .where('userId', '==', userId)
+        .where('paid', '==', true)
+        .get();
+      return orders.docs.map(
+        (doc) =>
+          new Order(
+            doc.id,
+            doc.data()?.userName,
+            doc.data()?.chefName,
+            doc.data()?.totalAmount,
+            doc.data()?.dailySubscriptionAmount,
+            doc.data()?.numberOfDays,
+            doc.data()?.numberOfPeople,
+            doc.data()?.userAddress,
+            doc.data()?.chefAddress,
+            doc.data()?.chefProfilePicture,
+            doc.data()?.type,
+            doc.data()?.isVeg,
+            doc.data()?.createdAt
+          )
+      );
+    } catch (error) {
+      l.error('[ORDERS: GET ORDERS OF A USER]', error);
       throw error;
     }
   }

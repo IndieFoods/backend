@@ -17,6 +17,17 @@ tags:
   - name: Order
     description: Order endpoints
 paths:
+  /auth/getUserDetails:
+    get:
+      tags:
+        - Auth
+      security:
+        - Bearer: []
+      summary: Get user details
+      description: Get user details
+      responses:
+        200:
+          description: Success
   /auth/signupUser:
     post:
       tags:
@@ -59,17 +70,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SignupChefResponse'
-  /auth/getUserDetails:
-    get:
-      tags:
-        - Auth
-      security:
-        - Bearer: []
-      summary: Get user details
-      description: Get user details
-      responses:
-        200:
-          description: Success
+
   /user/updateAddress:
     put:
       tags:
@@ -91,7 +92,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/AddAddressResponse'
-  /chef/:
+  /chef:
     get:
       tags:
         - Chef
@@ -187,7 +188,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SuccessResponse'
-  /menuItems/:
+  /menuItems:
     get:
       tags:
         - Menu Items
@@ -215,6 +216,36 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ChefMenuItems'
+  /order/getPaidOrdersOfAChef:
+    get:
+      tags:
+        - Order
+      security:
+        - Bearer: []
+      summary: Get all paid orders of a chef
+      description: Get all paid orders of a chef
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetOrdersResponse'
+  /order/getOrdersOfAUser:
+    get:
+      tags:
+        - Order
+      security:
+        - Bearer: []
+      summary: Get all orders of a user
+      description: Get all orders of a user
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetOrdersResponse'
   /order/initializeOrder:
     post:
       tags:
@@ -568,3 +599,34 @@ components:
       properties:
         message:
           type: string
+    GetOrdersResponse:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: string
+          chefName:
+            type: string
+          userName:
+            type: string
+          totalAmount:
+            type: integer
+          dailySubscriptionAmount:
+            type: integer
+          numberOfDays:
+            type: integer
+          numberOfPeople:
+            type: integer
+          userAddress:
+            type: string
+          chefAddress:
+            type: string
+          chefProfilePicture:
+            type: string
+          type:
+            type: string
+          isVeg:
+            type: boolean
+          startDate:
+            type: string

@@ -6,6 +6,7 @@ export class Controller {
       const {
         chefId,
         type,
+        isVeg,
         address,
         numberOfDays,
         numberOfPeople,
@@ -24,6 +25,7 @@ export class Controller {
         chefId,
         req.user.uid,
         type,
+        isVeg,
         address,
         numberOfDays,
         numberOfPeople,
@@ -46,6 +48,24 @@ export class Controller {
         orderId
       );
       res.status(200).json(response);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async getPaidOrdersOfAChef(req, res, next) {
+    try {
+      const ordersData = await OrderService.getPaidOrdersOfAChef(req.user.uid);
+      res.status(200).json(ordersData);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async getOrdersOfAUser(req, res, next) {
+    try {
+      const ordersData = await OrderService.getOrdersOfAUser(req.user.uid);
+      res.status(200).json(ordersData);
     } catch (error) {
       next(error);
     }
