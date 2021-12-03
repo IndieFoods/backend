@@ -97,48 +97,48 @@ paths:
         - Chef
       security:
         - Bearer: []
-      summary: Add a menu item to a chef
-      description: Add a menu item to a chef
+      summary: Add a menu items to a chef
+      description: Add a menu items to a chef
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/MenuItem'
+              $ref: '#/components/schemas/MenuItems'
       responses:
         200:
           description: Success
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/MenuItem'
-    get:
-      tags:
-        - Chef
-      security:
-        - Bearer: []
-      summary: Get all menu items from a chef
-      description: Get all menu items from a chef
-      responses:
-        200:
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/MenuItem'
+                $ref: '#/components/schemas/SuccessResponse'
+    # get:
+    #   tags:
+    #     - Chef
+    #   security:
+    #     - Bearer: []
+    #   summary: Get all menu items from a chef
+    #   description: Get all menu items from a chef
+    #   responses:
+    #     200:
+    #       description: Success
+    #       content:
+    #         application/json:
+    #           schema:
+    #             $ref: '#/components/schemas/MenuItem'
     put:
       tags:
         - Chef
       security:
         - Bearer: []
-      summary: Update a menu item from a chef
-      description: Update a menu item from a chef
+      summary: Update a menu items from a chef
+      description: Update a menu items from a chef
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/MenuItem'
+              $ref: '#/components/schemas/UpdateMenuItem'
       responses:
         200:
           description: Success
@@ -146,26 +146,26 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SuccessResponse'
-    delete:
-      tags:
-        - Chef
-      security:
-        - Bearer: []
-      summary: Delete a menu item from a chef
-      description: Delete a menu item from a chef
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/DeleteMenuItem'
-      responses:
-        200:
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/SuccessResponse'
+    # delete:
+    #   tags:
+    #     - Chef
+    #   security:
+    #     - Bearer: []
+    #   summary: Delete a menu item from a chef
+    #   description: Delete a menu item from a chef
+    #   requestBody:
+    #     required: true
+    #     content:
+    #       application/json:
+    #         schema:
+    #           $ref: '#/components/schemas/DeleteMenuItem'
+    #   responses:
+    #     200:
+    #       description: Success
+    #       content:
+    #         application/json:
+    #           schema:
+    #             $ref: '#/components/schemas/SuccessResponse'
 
 components:
   securitySchemes:
@@ -280,22 +280,48 @@ components:
                 type: string
         email:
           type: string
-    MenuItem:
+    MenuItems:
       type: object
+      required:
+        - menuItems
       properties:
-        name:
-          type: string
-        price:
-          type: number
-        image:
-          type: string
-        isVeg:
-          type: boolean
-        type:
-          type: string
-    DeleteMenuItem:
+        menuItems:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              image:
+                type: string
+              isVeg:
+                type: boolean
+              type:
+                type: string
+      
+    UpdateMenuItem:
       type: object
+      required:
+        - menuItems
       properties:
-        id:
-          type: string
+        menuItems:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              name:
+                type: string
+              image:
+                type: string
+              isVeg:
+                type: boolean
+              type:
+                type: string
+    # DeleteMenuItem:
+    #   type: object
+    #   properties:
+    #     id:
+    #       type: string
     
