@@ -4,5 +4,5 @@ import controller from './controller';
 
 export default express
   .Router()
-  .post('/signup-user', authHandler, controller.signupUser)
-  .post('/signup-chef', authHandler, controller.signupChef);
+  .post('/signupUser', authHandler, controller.signupUser)
+  .post('/signupChef', authHandler, controller.signupChef);

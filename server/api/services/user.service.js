@@ -21,12 +21,12 @@ class UserService {
     }
   }
 
-  async addAddress(uid, address) {
+  async updateAddress(uid, address) {
     try {
       await this.userCollectionRef.doc(uid).update({
         address: address,
       });
-      return { message: 'Address added successfully' };
+      return { message: 'Address added/updated successfully' };
     } catch (error) {
       l.error('[USER: ADD/UPDATE ADDRESS]', error);
       throw error;

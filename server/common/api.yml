@@ -15,7 +15,7 @@ tags:
   - name: Menu Items
     description: Menu Items endpoints
 paths:
-  /auth/signup-user:
+  /auth/signupUser:
     post:
       tags:
         - Auth
@@ -36,7 +36,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SignupUserResponse'
-  /auth/signup-chef:
+  /auth/signupChef:
     post:
       tags:
         - Auth
@@ -72,14 +72,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
-  /user/add-address:
-    post:
+  /user/updateAddress:
+    put:
       tags:
         - User
       security:
         - Bearer: []
-      summary: Add an address to a user
-      description: Add an address to a user
+      summary:  Update user addresses
+      description: Update user addresses
       requestBody:
         required: true
         content:
