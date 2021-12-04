@@ -8,17 +8,17 @@ export class Controller {
         type,
         isVeg,
         address,
-        numberOfDays,
+        numberOfWeeks,
         numberOfPeople,
-        dailySubscriptionAmount,
+        weeklySubscriptionAmount,
       } = req.body;
       if (
         !chefId ||
         !type ||
         !address ||
-        !numberOfDays ||
+        !numberOfWeeks ||
         !numberOfPeople ||
-        !dailySubscriptionAmount
+        !weeklySubscriptionAmount
       )
         throw new Error('Missing required fields');
       const reponse = await OrderService.initializeOrder(
@@ -27,9 +27,9 @@ export class Controller {
         type,
         isVeg,
         address,
-        numberOfDays,
+        numberOfWeeks,
         numberOfPeople,
-        dailySubscriptionAmount
+        weeklySubscriptionAmount
       );
       res.status(200).json(reponse);
     } catch (error) {

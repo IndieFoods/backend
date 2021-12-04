@@ -556,8 +556,8 @@ components:
         - type
         - address
         - numberOfPeople
-        - numberOfDays
-        - dailySubscriptionAmount
+        - numberOfWeeks
+        - weeklySubscriptionAmount
       properties:
         chefId:
           type: string
@@ -567,9 +567,9 @@ components:
           type: string
         numberOfPeople:
           type: integer
-        numberOfDays:
+        numberOfWeeks:
           type: integer
-        dailySubscriptionAmount:
+        weeklySubscriptionAmount:
           type: integer
     InitializeOrderResponse:
       type: object
@@ -617,9 +617,9 @@ components:
             type: string
           totalAmount:
             type: integer
-          dailySubscriptionAmount:
+          weeklySubscriptionAmount:
             type: integer
-          numberOfDays:
+          numberOfWeeks:
             type: integer
           numberOfPeople:
             type: integer

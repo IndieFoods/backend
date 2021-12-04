@@ -15,26 +15,26 @@ class OrderService {
     type,
     isVeg,
     address,
-    numberOfDays,
+    numberOfWeeks,
     numberOfPeople,
-    dailySubscriptionAmount
+    weeklySubscriptionAmount
   ) {
     try {
       const plan = await razorpayInstance.plans.create({
-        period: 'daily',
+        period: 'weekly',
         interval: 1,
         item: {
           name: `${userId} subscribed to ${chefId}`,
-          amount: dailySubscriptionAmount * 100,
+          amount: weeklySubscriptionAmount * 100,
           currency: 'INR',
           description: `${type} - ${address}`,
         },
       });
 
-      const subscription = razorpayInstance.subscriptions.create({
+      const subscription = await razorpayInstance.subscriptions.create({
         plan_id: plan.id,
         customer_notify: 1,
-        total_count: numberOfDays,
+        total_count: numberOfWeeks,
       });
 
       const user = await this.userCollectionRef.doc(userId).get();
@@ -53,10 +53,10 @@ class OrderService {
         paid: false,
         subscriptionId: subscription.id,
         planId: plan.id,
-        numberOfDays,
+        numberOfWeeks,
         numberOfPeople,
-        totalAmount: dailySubscriptionAmount * numberOfDays,
-        dailySubscriptionAmount,
+        totalAmount: weeklySubscriptionAmount * numberOfWeeks,
+        weeklySubscriptionAmount,
         createdAt: new Date(),
       });
 
@@ -66,6 +66,7 @@ class OrderService {
         orderId: orderDocumentRef.id,
       };
     } catch (error) {
+      console.log(error);
       l.error('[ORDERS: INITIALIZE ORDER]', error);
       throw error;
     }
@@ -112,8 +113,8 @@ class OrderService {
             doc.data()?.userName,
             doc.data()?.chefName,
             doc.data()?.totalAmount,
-            doc.data()?.dailySubscriptionAmount,
-            doc.data()?.numberOfDays,
+            doc.data()?.weeklySubscriptionAmount,
+            doc.data()?.numberOfWeeks,
             doc.data()?.numberOfPeople,
             doc.data()?.userAddress,
             doc.data()?.chefAddress,
@@ -142,8 +143,8 @@ class OrderService {
             doc.data()?.userName,
             doc.data()?.chefName,
             doc.data()?.totalAmount,
-            doc.data()?.dailySubscriptionAmount,
-            doc.data()?.numberOfDays,
+            doc.data()?.weeklySubscriptionAmount,
+            doc.data()?.numberOfWeeks,
             doc.data()?.numberOfPeople,
             doc.data()?.userAddress,
             doc.data()?.chefAddress,

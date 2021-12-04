@@ -4,8 +4,8 @@ class Order {
     userName,
     chefName,
     totalAmount,
-    dailySubscriptionAmount,
-    numberOfDays,
+    weeklySubscriptionAmount,
+    numberOfWeeks,
     numberOfPeople,
     userAddress,
     chefAddress,
@@ -18,8 +18,8 @@ class Order {
     this.userName = userName;
     this.chefName = chefName;
     this.totalAmount = totalAmount;
-    this.dailySubscriptionAmount = dailySubscriptionAmount;
-    this.numberOfDays = numberOfDays;
+    this.weeklySubscriptionAmount = weeklySubscriptionAmount;
+    this.numberOfWeeks = numberOfWeeks;
     this.numberOfPeople = numberOfPeople;
     this.userAddress = userAddress;
     this.chefAddress = chefAddress;
