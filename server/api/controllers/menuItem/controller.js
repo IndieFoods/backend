@@ -13,7 +13,7 @@ export class Controller {
   async getAllMenuItemsOfAChef(req, res, next) {
     try {
       const menuItems = await MenuItemService.getAllMenuItemsOfAChef(
-        req.user.uid
+        req.params.chefId
       );
       res.status(200).json(menuItems);
     } catch (error) {

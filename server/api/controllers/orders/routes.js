@@ -6,5 +6,5 @@ export default express
   .Router()
   .get('/getOrdersOfAUser', authHandler, controller.getOrdersOfAUser)
   .get('/getPaidOrdersOfAChef', authHandler, controller.getPaidOrdersOfAChef)
-  .post('/initializeOrder', authHandler, controller.initializeSubscription)
+  .post('/initializeOrder', authHandler, controller.initializeOrder)
   .post('/verifyOrder', authHandler, controller.verifyOrder);

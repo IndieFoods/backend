@@ -201,14 +201,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/AllMenuItems'
-  /menuItems/chef:
+  /menuItems/{chefId}:
     get:
       tags:
         - Menu Items
-      security:
-        - Bearer: []
       summary: Get all menu items from a chef
       description: Get all menu items from a chef
+      parameters:
+        - name: chefId
+          in: path
+          description: The id of chef whose menu is to be retrieved
+          required: true
+          schema:
+            type: string
       responses:
         200:
           description: Success
