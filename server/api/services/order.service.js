@@ -1,4 +1,3 @@
-import crypto from 'crypto';
 import { database } from '../../common/firebase';
 import l from '../../common/logger';
 import razorpayInstance from '../../common/razorpay';
@@ -78,16 +77,18 @@ class OrderService {
       if (!order.exists) {
         throw new Error('Order not found, please try again');
       }
-      const subscriptionPaymentId =
-        razorpay_payment_id + '|' + order.subscriptionId;
-      const expectedSignature = crypto
-        .createHmac('sha256', process.env.RAZORPAY_KEY_SECRET)
-        .update(subscriptionPaymentId)
-        .digest('hex');
+      console.log('razorpay_payment_id', razorpay_payment_id);
+      console.log('razorpay_signature', razorpay_signature);
+      console.log('orderId', orderId);
 
-      if (expectedSignature !== razorpay_signature) {
-        throw new Error('Invalid signature');
-      }
+      razorpayInstance.payments.paymentVerification(
+        {
+          subscription_id: order.subscriptionId,
+          payment_id: razorpay_payment_id,
+          signature: razorpay_signature,
+        },
+        process.env.RAZORPAY_KEY_SECRET
+      );
 
       await order.ref.update({
         paid: true,
