@@ -201,7 +201,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/AllMenuItems'
-  /menuItems/chef:
+  /menuItems/{chefId}:
     get:
       tags:
         - Menu Items
