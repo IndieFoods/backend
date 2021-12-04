@@ -5,4 +5,4 @@ import controller from './controller';
 export default express
   .Router()
   .get('/', controller.getAllMenuItems)
-  .get('/chef', authHandler, controller.getAllMenuItemsOfAChef);
+  .get('/:chefId', controller.getAllMenuItemsOfAChef);
