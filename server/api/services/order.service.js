@@ -1,3 +1,4 @@
+import crypto from 'crypto';
 import { database } from '../../common/firebase';
 import l from '../../common/logger';
 import razorpayInstance from '../../common/razorpay';
@@ -65,7 +66,6 @@ class OrderService {
         orderId: orderDocumentRef.id,
       };
     } catch (error) {
-      console.log(error);
       l.error('[ORDERS: INITIALIZE ORDER]', error);
       throw error;
     }
@@ -77,24 +77,23 @@ class OrderService {
       if (!order.exists) {
         throw new Error('Order not found, please try again');
       }
-      console.log('razorpay_payment_id', razorpay_payment_id);
-      console.log('razorpay_signature', razorpay_signature);
-      console.log('orderId', orderId);
 
-      razorpayInstance.payments.paymentVerification(
-        {
-          subscription_id: order.subscriptionId,
-          payment_id: razorpay_payment_id,
-          signature: razorpay_signature,
-        },
-        process.env.RAZORPAY_KEY_SECRET
-      );
+      const subscriptionPaymentId =
+        razorpay_payment_id + '|' + order.data()?.subscriptionId;
 
-      await order.ref.update({
-        paid: true,
-        paidAt: new Date(),
-      });
-      return { message: 'Subscription successfull' };
+      const expectedSignature = crypto
+        .createHmac('sha256', process.env.RAZORPAY_KEY_SECRET)
+        .update(subscriptionPaymentId)
+        .digest('hex');
+
+      if (expectedSignature === razorpay_signature) {
+        await order.ref.update({
+          paid: true,
+          paidAt: new Date(),
+        });
+        return { message: 'Subscription successfull' };
+      }
+      throw new Error('Payment verification failed');
     } catch (error) {
       l.error('[ORDERS: VERIFY ORDER]', error);
       throw error;
