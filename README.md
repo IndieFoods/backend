@@ -1,120 +1,56 @@
-# IndieFoods
+<div align="center">
+  <h1>IndieFoods</h1>
+  <p>
+    The Backend Repository for the IndieFoods<br>
+    <a href="https://indie-foods.centralindia.cloudapp.azure.com/">
+    IndieFoods API Documentation
+  </a>
+  <br/>
+  </p>
+</div>
 
-Backend for IndieFoods
+## What is IndieFoods?
 
-## Get Started
+IndieFoods is a home-cooked food subscription platform created to empower the indie chefs, the superstars who cook great food at home and want to take it a step higher. Our users will have the choice of multiple meal plans and chefs within their area.
 
-Get started developing...
+## What's our Motive?
 
-```shell
-# install deps
+<ul>
+<li>
+The pandemic saw many indie chefs delivering home cooked food to support the sick but most of it happened in the unorganized sector, like whatsapp groups. 
+</li>
+<li>
+After brief research we couldn’t find a good and active platform for home-cooked food subscriptions. There are players like FoodDarzee but they hire professional chefs and the rates are very expensive. There are a couple of home-cooked food delivery companies but they work on a per-order basis and not subscriptions. They too aren’t very active and their websites either crashed or didn’t accept orders. So we believe there is a good market share to be captured in this segment.
+</li>
+<li>
+Another reason why we built IndieFoods is to empower the indie chefs and hence lead to the growth in the individual creator economy, which is all the buzz these days.
+</li>
+<li>
+And finally, we aim to provide healthy home-cooked food at affordable prices.
+</li>
+</ul>
+
+## Getting Started
+
+1. Fork the repository
+2. Clone the repository
+
+```sh
+git clone https://github.com/IndieFoods/frontend.git
+```
+
+3. Open the folder containing the cloned repository
+4. Install the required packages, libraries and dependencies
+
+```sh
 npm install
-
-# run in development mode
-npm run dev
-
-# run tests
-npm run test
 ```
 
-## How do I modify the example API and make it my own?
+5. Custom API keys can be set up in a `.env` file. The format for `.env` file can be found in `.env.example`.
+6. Start the project using:-
 
-There are two key files that enable you to customize and describe your API:
-1. `server/routes.js` - This references the implementation of all of your routes. Add as many routes as you like and point each route your express handler functions.
-2. `server/common/api.yaml` - This file contains your [OpenAPI spec](https://swagger.io/specification/). Describe your API here. It's recommended that you to declare any and all validation logic in this YAML. `express-no-stress-typescript`  uses [express-openapi-validator](https://github.com/cdimascio/express-openapi-validator) to automatically handle all API validation based on what you've defined in the spec.
-
-## Install Dependencies
-
-Install all package dependencies (one time operation)
-
-```shell
-npm install
-```
-
-## Run It
-#### Run in *development* mode:
-Runs the application is development mode. Should not be used in production
-
-```shell
+```sh
 npm run dev
 ```
 
-or debug it
-
-```shell
-npm run dev:debug
-```
-
-#### Run in *production* mode:
-
-Compiles the application and starts it in production production mode.
-
-```shell
-npm run compile
-npm start
-```
-
-## Test It
-
-Run the Mocha unit tests
-
-```shell
-npm test
-```
-
-or debug them
-
-```shell
-npm run test:debug
-```
-
-## Try It
-* Open your browser to [http://localhost:3000](http://localhost:3000)
-* Invoke the `/examples` endpoint 
-  ```shell
-  curl http://localhost:3000/api/v1/examples
-  ```
-
-
-## Debug It
-
-#### Debug the server:
-
-```
-npm run dev:debug
-```
-
-#### Debug Tests
-
-```
-npm run test:debug
-```
-
-#### Debug with VSCode
-
-Add these [contents](https://github.com/cdimascio/generator-express-no-stress/blob/next/assets/.vscode/launch.json) to your `.vscode/launch.json` file
-
-## Lint It
-
-View prettier linter output
-
-```
-npm run lint
-```
-
-Fix all prettier linter errors
-
-```
-npm run lint
-```
-
-## Deploy It
-
-Deploy to CloudFoundry
-
-```shell
-cf push IndieFoods
-```
-
-
-   
+7. Open http://localhost:3000 to view the API documentation.
